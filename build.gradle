@@ -1,6 +1,4 @@
-//의존성 관련 내용이다.
 buildscript {
-    //스프링부트의 전역 변수를 형성하고 그 릴리즈 버전을 2.1.9로 사용하겠단 의미다.
     ext {
         springBootVersion = '2.1.9.RELEASE'
     }
@@ -8,40 +6,37 @@ buildscript {
         mavenCentral()
         jcenter()
     }
-    //하단의 dependencies의 특정 버전을 선언하지 않으면 이곳에서 적용된 버전을 따라간다.
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
-//인텔리재이의 플러그인에 대한 설정이다.
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-//주의: com.test.page 는 처음에 작성했던 그룹과 일치해야 한다.
-group 'com.test.page'
-version '1.0-SNAPSHOT-'
+group 'com.jojoldu.book'
+version '1.0.4-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
 sourceCompatibility = 1.8
-//라이브러리들을 어떤 원격 저장소에서 받을 것인지 정한다.
-//기본적으로 mavencentral을 많이 사용하지만 최근에는 jcenter도 사용하는 추세다.
+
 repositories {
     mavenCentral()
     jcenter()
 }
 
-//프로젝트 개발에 필요한 의존성을 선언하는 장소다.
-//스프링부트web, 롬복, jpa등등을 사용할 수 있는 장소다.
 dependencies {
-    implementation 'org.projectlombok:lombok:1.18.20'
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.projectlombook:lombok')
+    compile('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('com.h2database:h2')
     compile('org.springframework.boot:spring-boot-starter-mustache')
+    compile('com.h2database:h2')
+
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
     compile('org.springframework.session:spring-session-jdbc')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
 
+    compile("org.mariadb.jdbc:mariadb-java-client")
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.springframework.security:spring-security-test")
 }
